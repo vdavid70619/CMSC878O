@@ -1,2 +1,0 @@
-[D, c] = create_classification_problem(200,2,0)
-plot(D())

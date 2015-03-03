@@ -1,0 +1,24 @@
+function [x_sol, res] = grad_descent(f, grad, x0)
+    alpha = 0.1;    
+    delta = ones(size(x0))*0.01;
+    L = norm(grad(x0+delta)-grad(x0))/norm(x0+delta-x0);
+    tau = 2/L; 
+    
+    x_old = x0;
+    res(1) = norm(grad(x0))
+    
+    iter = 1;
+    while res(iter)>eps
+        d = - grad(x_old);      
+        % Line search to get stepsize
+        while f(x_old+tau*d) >= f(x_old) + alphs*(tau*d)'*grad(x_old)
+            tau = tau/2;
+        end
+        
+        x_new = x_old + tau*d;
+        x_sol(iter) = x_new;
+        res(iter) = norm(grad(x_new));
+        
+        iter = iter + 1;
+    end
+end
